@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring-2.23.3.xsd">
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
         <restConfiguration bindingMode="auto" component="jetty"
-            host="localhost" port="8080"/>
+            host="localhost" port="9678"/>
         <rest consumes="application/json"
             id="rest-2ae71dfc-8306-4a1f-8660-3d450017b669" path="/Motor">
             <get enableCORS="false"
@@ -12,22 +12,22 @@
             </get>
         </rest>
         <route id="_routeQoute">
-            <from uri="direct:MotorQuote"/>
-            <choice>
-                <when>
+            <from id="_from1" uri="direct:MotorQuote"/>
+            <choice id="_choice1">
+                <when id="_when1">
                     <simple>${header.client} == 'policybazaar'</simple>
-                    <transform>
+                    <transform id="_transform1">
                         <simple>Hello policy bazaar, ${body}</simple>
                     </transform>
                 </when>
-                <when>
+                <when id="_when2">
                     <simple>${header.client} == 'coverfox'</simple>
-                    <transform>
+                    <transform id="_transform2">
                         <simple>Hello Coverfox, ${body}</simple>
                     </transform>
                 </when>
-                <otherwise>
-                    <transform>
+                <otherwise id="_otherwise1">
+                    <transform id="_transform3">
                         <simple>Hello ${body}</simple>
                     </transform>
                 </otherwise>
