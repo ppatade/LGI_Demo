@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="
-       http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-       http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring-2.23.3.xsd">
-
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring-2.23.3.xsd">
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
-        <route id="simple-route">
-            <from id="route-timer" uri="timer://foo?period=1000"/>
-            <setBody id="route-setBody"><simple>Hello World from camel-context.xml</simple></setBody>
-            <log id="route-log" message=">>> ${body}"/>
+        <restConfiguration bindingMode="auto" component="jetty"
+            host="localhost" port="8080"/>
+        <rest consumes="application/json"
+            id="rest-2ae71dfc-8306-4a1f-8660-3d450017b669" path="/Motor">
+            <get enableCORS="false"
+                id="66b0e394-350f-4db6-b84b-9ed9aae26d25" uri="/Quote">
+                <to uri="direct:MotorQuote"/>
+            </get>
+        </rest>
+        <route id="_routeQoute">
+            <from uri="direct:MotorQuote"/>
+            <choice>
+                <when>
+                    <simple>${header.client} == 'policybazaar'</simple>
+                    <transform>
+                        <simple>Hello policy bazaar, ${body}</simple>
+                    </transform>
+                </when>
+                <when>
+                    <simple>${header.client} == 'coverfox'</simple>
+                    <transform>
+                        <simple>Hello Coverfox, ${body}</simple>
+                    </transform>
+                </when>
+                <otherwise>
+                    <transform>
+                        <simple>Hello ${body}</simple>
+                    </transform>
+                </otherwise>
+            </choice>
         </route>
     </camelContext>
 </beans>
