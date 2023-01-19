@@ -17,7 +17,7 @@
                 <when id="_when1">
                     <simple>${header.client} == 'policybazaar'</simple>
                     <transform id="_transform1">
-                        <simple>Hello policy bazaar, ${body}</simple>
+                        <simple>Hello Policy Bazaar, ${body}</simple>
                     </transform>
                 </when>
                 <when id="_when2">
