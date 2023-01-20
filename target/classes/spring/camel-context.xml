@@ -7,7 +7,7 @@
         <rest consumes="application/json"
             id="rest-2ae71dfc-8306-4a1f-8660-3d450017b669" path="/Motor">
             <post enableCORS="false"
-                id="66b0e394-350f-4db6-b84b-9ed9aae26d25" uri="/Quote">
+                id="66b0e394-350f-4db6-b84b-9ed9aae26d25">
                 <to uri="direct:MotorQuote"/>
             </post>
         </rest>
