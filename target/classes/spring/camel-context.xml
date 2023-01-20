@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring-2.23.3.xsd">
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
         <restConfiguration bindingMode="auto" component="jetty"
-            host="0.0.0.0" port="8080"/>
+            host="0.0.0.0" port="9678"/>
         <rest consumes="application/json"
             id="rest-2ae71dfc-8306-4a1f-8660-3d450017b669" path="/Motor">
             <get enableCORS="false"
@@ -16,20 +16,14 @@
             <choice id="_choice1">
                 <when id="_when1">
                     <simple>${header.client} == 'policybazaar'</simple>
-                    <transform id="_transform1">
-                        <simple>Hello Policy Bazaar, ${body}</simple>
-                    </transform>
+                    <to id="_to1" uri="atlasmap:maps/policybazaar.adm"/>
                 </when>
                 <when id="_when2">
                     <simple>${header.client} == 'coverfox'</simple>
-                    <transform id="_transform2">
-                        <simple>Hello Coverfox, ${body}</simple>
-                    </transform>
+                    <to id="_to2" uri="atlasmap:maps/policybazaar.adm"/>
                 </when>
                 <otherwise id="_otherwise1">
-                    <transform id="_transform3">
-                        <simple>Hello ${body}</simple>
-                    </transform>
+                    <to id="_to3" uri="atlasmap:maps/policybazaar.adm"/>
                 </otherwise>
             </choice>
         </route>
