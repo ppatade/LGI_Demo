@@ -6,10 +6,10 @@
             host="0.0.0.0" port="9678"/>
         <rest consumes="application/json"
             id="rest-2ae71dfc-8306-4a1f-8660-3d450017b669" path="/Motor">
-            <get enableCORS="false"
+            <post enableCORS="false"
                 id="66b0e394-350f-4db6-b84b-9ed9aae26d25" uri="/Quote">
                 <to uri="direct:MotorQuote"/>
-            </get>
+            </post>
         </rest>
         <route id="_routeQoute">
             <from id="_from1" uri="direct:MotorQuote"/>
